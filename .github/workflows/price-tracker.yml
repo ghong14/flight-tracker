@@ -1,0 +1,36 @@
+name: Flight price tracker
+
+# Looks up the FLL->SEA Delta fare for 2026-09-11 once a day and opens a GitHub
+# issue (which the GitHub mobile app pushes to you) if it's at or below the
+# TARGET_PRICE set in flight_price_tracker.py. No files are written and nothing
+# is committed back, so there is no push step that can fail.
+
+on:
+  schedule:
+    - cron: "0 13 * * *"   # once a day at 13:00 UTC (~morning US)
+  workflow_dispatch: {}      # lets you run it manually from the Actions tab
+
+permissions:
+  contents: read             # checkout only needs read
+  issues: write              # needed to open the alert issue
+
+jobs:
+  check-price:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run price check
+        env:
+          SERPAPI_KEY: ${{ secrets.SERPAPI_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python flight_price_tracker.py
