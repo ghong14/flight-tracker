@@ -30,7 +30,7 @@ CURRENCY = "USD"
 TRIP_TYPE = 2                   # SerpApi: 1=round trip, 2=one-way
 
 # >>> Alert when the fare is at or below this price. Change it to your target.
-TARGET_PRICE = 9999
+TARGET_PRICE = 200
 
 SERPAPI_KEY = os.environ.get("SERPAPI_KEY", "PUT_YOUR_KEY_HERE")
 # -------------------------------------------------------------------------
