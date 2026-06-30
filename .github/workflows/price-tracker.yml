@@ -7,7 +7,7 @@ name: Flight price tracker
 
 on:
   schedule:
-    - cron: "0 0,8,16 * * *"   # every 8h at 16:00/00:00/08:00 UTC = 9AM/5PM/1AM PDT
+    - cron: "0 4,16 * * *"   # twice daily at 16:00/04:00 UTC = 9AM/9PM PDT
   workflow_dispatch: {}      # lets you run it manually from the Actions tab
 
 permissions:
